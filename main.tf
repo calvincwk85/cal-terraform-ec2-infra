@@ -1,3 +1,11 @@
+provider "aws" {
+  region = "ap-southeast-1" 
+}
+
+local {#Change this to your desired region
+  local prefix = "cal-coach17" #Change this to your desired prefix
+}
+
 resource "aws_ecr_repository" "ecr" {
   name         = "${local.prefix}-ecr"
   force_delete = true
@@ -16,11 +24,11 @@ module "ecs" {
     }
   }
   services = {
-    cal-coaching17-ecs-taskdef = { #task definition and service name -> #Change
+    YOUR-TASKDEFINITION-NAME = { #task definition and service name -> #Change
       cpu    = 512
       memory = 1024
       container_definitions = {
-        Cal-CONTAINER-NAME = { #container name -> Change
+        YOUR-CONTAINER-NAME = { #container name -> Change
           essential = true
           image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${local.prefix}-ecr:latest"
           port_mappings = [
